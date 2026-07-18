@@ -40,7 +40,7 @@
       --shadow:0 12px 32px rgba(0,0,0,.24);
     }
     *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
+    html{scroll-behavior:auto}
     body{
       margin:0;
       min-height:100vh;
@@ -1999,6 +1999,10 @@ html.v22-ready .globalSettingsSubpanel.open{
   html.v22-ready .globalSettingsPanel,html.v22-ready .globalSettingsSubpanel,.wrap,.wrap>.mainTopBar~*{transition:none!important}
 }
 </style>
+<style id="zad-v65-instant-start-style">
+  /* فتح فوري: لا تعرض بطاقة تحميل كبيرة قبل دخول الواجهة. */
+  #loading{display:none!important}
+</style>
 
 
 <style id="zad-fast-desktop-v23">
@@ -2348,7 +2352,52 @@ html.zad-v29-final .zadPanel,html.zad-v29-final .heartPanel,html.zad-v29-final .
 }
 </style>
 
-<meta name="zad-build" content="V1.1-v57-audio-quran-fix">
+<meta name="zad-build" content="V1.1-v66-zero-delay">
+
+<style id="zad-gradient-palettes-v64-style">
+/* V64 — تدرجات ثنائية اللون مع الحفاظ على وضوح النصوص وباقي التصميم. */
+html[data-palette="grad-emerald-blue"][data-theme="dark"]{--grad-1:#24a966;--grad-2:#247fb8;--bg:#06131a;--card:#10272a;--card2:#17363a;--text:#f6fffe;--muted:#b9d3d4;--gold:#86c9ee;--green:#24a966;--red:#d95f6c;--line:rgba(255,255,255,.14);--active-accent-rgb:36,169,102}
+html[data-palette="grad-emerald-blue"][data-theme="light"]{--grad-1:#24a966;--grad-2:#247fb8;--bg:#eef9f8;--card:#fbfffe;--card2:#dfeff0;--text:#193231;--muted:#607b7b;--gold:#2d719d;--green:#218f61;--red:#b94b57;--line:rgba(35,90,90,.15);--active-accent-rgb:36,169,102}
+html[data-palette="grad-purple-rose"][data-theme="dark"]{--grad-1:#8b55c7;--grad-2:#c95b8d;--bg:#160b1b;--card:#2a1530;--card2:#3b2044;--text:#fff7fd;--muted:#d6b9d0;--gold:#e5a9d1;--green:#9a58bf;--red:#e26794;--line:rgba(255,255,255,.14);--active-accent-rgb:139,85,199}
+html[data-palette="grad-purple-rose"][data-theme="light"]{--grad-1:#8b55c7;--grad-2:#c95b8d;--bg:#fbf2fb;--card:#fffaff;--card2:#f1e0ef;--text:#35213a;--muted:#7b627c;--gold:#8b4778;--green:#9655b8;--red:#b84e79;--line:rgba(95,45,100,.14);--active-accent-rgb:139,85,199}
+html[data-palette="grad-gold-orange"][data-theme="dark"]{--grad-1:#d3a234;--grad-2:#d87731;--bg:#181006;--card:#2e210f;--card2:#422d16;--text:#fff9ef;--muted:#dcc5a8;--gold:#f1c861;--green:#c7842c;--red:#df6254;--line:rgba(255,235,180,.16);--active-accent-rgb:211,162,52}
+html[data-palette="grad-gold-orange"][data-theme="light"]{--grad-1:#d3a234;--grad-2:#d87731;--bg:#fff7e9;--card:#fffdf7;--card2:#f6e6cc;--text:#3a2a17;--muted:#7c684d;--gold:#a46e1a;--green:#bf7a28;--red:#ba4c3d;--line:rgba(110,70,25,.15);--active-accent-rgb:211,162,52}
+html[data-palette="grad-blue-purple"][data-theme="dark"]{--grad-1:#397bc4;--grad-2:#8c5cc7;--bg:#0b0d1c;--card:#171b35;--card2:#232746;--text:#f8f8ff;--muted:#c2c2dc;--gold:#b8b5f3;--green:#596fc0;--red:#d86483;--line:rgba(255,255,255,.14);--active-accent-rgb:57,123,196}
+html[data-palette="grad-blue-purple"][data-theme="light"]{--grad-1:#397bc4;--grad-2:#8c5cc7;--bg:#f2f5ff;--card:#fcfcff;--card2:#e5e7f6;--text:#222b43;--muted:#68708a;--gold:#625ca4;--green:#4c70b7;--red:#b94e70;--line:rgba(55,65,115,.14);--active-accent-rgb:57,123,196}
+html[data-palette="grad-teal-blue"][data-theme="dark"]{--grad-1:#238f8c;--grad-2:#397bc4;--bg:#06151a;--card:#102a31;--card2:#173b47;--text:#f3feff;--muted:#b6d0d5;--gold:#8bc8e5;--green:#238f8c;--red:#d85f68;--line:rgba(255,255,255,.14);--active-accent-rgb:35,143,140}
+html[data-palette="grad-teal-blue"][data-theme="light"]{--grad-1:#238f8c;--grad-2:#397bc4;--bg:#eef9fb;--card:#fbfeff;--card2:#deedf1;--text:#1c3339;--muted:#617b81;--gold:#397a9b;--green:#238f8c;--red:#b94d55;--line:rgba(35,90,100,.14);--active-accent-rgb:35,143,140}
+html[data-palette="grad-red-purple"][data-theme="dark"]{--grad-1:#d64545;--grad-2:#8c5cc7;--bg:#180b12;--card:#2d1426;--card2:#401d38;--text:#fff7fb;--muted:#d9bacd;--gold:#dfa9dc;--green:#a34d8f;--red:#e25d68;--line:rgba(255,255,255,.14);--active-accent-rgb:214,69,69}
+html[data-palette="grad-red-purple"][data-theme="light"]{--grad-1:#d64545;--grad-2:#8c5cc7;--bg:#fff3f8;--card:#fffaff;--card2:#f3e0ec;--text:#3a202f;--muted:#7f6374;--gold:#8d4d86;--green:#a34d8f;--red:#bd4652;--line:rgba(105,45,80,.14);--active-accent-rgb:214,69,69}
+html[data-palette="custom-gradient"][data-theme="dark"]{--grad-1:#24a966;--grad-2:#247fb8;--bg:color-mix(in srgb,var(--grad-1) 12%,#07100c);--card:color-mix(in srgb,var(--grad-1) 15%,#111d19);--card2:color-mix(in srgb,var(--grad-2) 18%,#192522);--text:#f8fffd;--muted:#bfd0ca;--gold:var(--grad-2);--green:var(--grad-1);--red:#d95f68;--line:rgba(255,255,255,.14)}
+html[data-palette="custom-gradient"][data-theme="light"]{--grad-1:#24a966;--grad-2:#247fb8;--bg:color-mix(in srgb,var(--grad-1) 8%,#f8fbf9);--card:#fff;--card2:color-mix(in srgb,var(--grad-2) 10%,#f0f4f2);--text:#1e2f2a;--muted:#667a73;--gold:var(--grad-2);--green:var(--grad-1);--red:#b94d55;--line:rgba(40,70,60,.15)}
+
+html[data-palette^="grad-"] body,html[data-palette="custom-gradient"] body{
+  background:
+    radial-gradient(circle at 10% 12%,color-mix(in srgb,var(--grad-1) 30%,transparent),transparent 36%),
+    radial-gradient(circle at 90% 82%,color-mix(in srgb,var(--grad-2) 26%,transparent),transparent 40%),
+    linear-gradient(145deg,color-mix(in srgb,var(--grad-1) 10%,var(--bg)),var(--bg) 44%,color-mix(in srgb,var(--grad-2) 12%,var(--bg)))!important;
+  background-attachment:fixed!important;
+}
+html[data-palette^="grad-"] .mainTopBar,html[data-palette="custom-gradient"] .mainTopBar,
+html[data-palette^="grad-"] #wirdModule>header,html[data-palette="custom-gradient"] #wirdModule>header{
+  background:linear-gradient(135deg,color-mix(in srgb,var(--card) 92%,var(--grad-1) 8%),color-mix(in srgb,var(--card) 92%,var(--grad-2) 8%))!important;
+}
+.v45Swatch.grad-emerald-blue{background:linear-gradient(135deg,#24a966,#247fb8)}
+.v45Swatch.grad-purple-rose{background:linear-gradient(135deg,#8b55c7,#c95b8d)}
+.v45Swatch.grad-gold-orange{background:linear-gradient(135deg,#d3a234,#d87731)}
+.v45Swatch.grad-blue-purple{background:linear-gradient(135deg,#397bc4,#8c5cc7)}
+.v45Swatch.grad-teal-blue{background:linear-gradient(135deg,#238f8c,#397bc4)}
+.v45Swatch.grad-red-purple{background:linear-gradient(135deg,#d64545,#8c5cc7)}
+.v64ScopeGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.v64ScopeGrid .v45Choice.active{outline:2px solid var(--green);background:rgba(var(--active-accent-rgb),.12)}
+.v64GradientBuilder{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:end}
+.v64ColorField{display:grid;gap:6px;color:var(--muted);font-size:11px;font-weight:800}
+.v64ColorField input[type="color"]{width:100%;height:46px;padding:4px;border:1px solid var(--line);border-radius:13px;background:var(--card2);cursor:pointer}
+.v64GradientApply{grid-column:1/-1;min-height:46px;border-radius:13px;background:linear-gradient(135deg,var(--v64-preview-1,#24a966),var(--v64-preview-2,#247fb8));color:#fff;border:1px solid var(--line);font-weight:900;text-shadow:0 1px 3px rgba(0,0,0,.3)}
+.v64Hint{margin:8px 2px 0;color:var(--muted);font-size:10.5px;line-height:1.7}
+@media(max-width:430px){.v64GradientBuilder{grid-template-columns:1fr 1fr}.v64ScopeGrid{grid-template-columns:1fr 1fr}}
+</style>
+
 </head>
 <body>
   <div class="wrap">
@@ -2976,7 +3025,7 @@ function $(id){ return document.getElementById(id); }
 
 
 
-const AVAILABLE_PALETTES = ['emerald','mono','red','gold','purple','blue','rose','teal','orange'];
+const AVAILABLE_PALETTES = ['emerald','mono','red','gold','purple','blue','rose','teal','orange','grad-emerald-blue','grad-purple-rose','grad-gold-orange','grad-blue-purple','grad-teal-blue','grad-red-purple','custom-gradient'];
 
 function applyPalette(palette, persist=true){
   const finalPalette = AVAILABLE_PALETTES.includes(palette) ? palette : 'emerald';
@@ -3104,19 +3153,33 @@ function getStoredAmount(){
 initPalette();
 initTheme();
 
+function showInstantQuranShell(message='جاري تجهيز ورد اليوم...'){
+  const loading = $('loading');
+  if(loading) loading.classList.add('hidden');
+  const content = $('wirdContent');
+  if(content && !quran){
+    content.innerHTML = `<div class="status" style="padding:14px 4px">${escapeHTML(message)}</div>`;
+  }
+}
+
 async function init(){
   dailyHizb = getStoredAmount();
   syncAmountControls();
   $('startDate').value = localStorage.getItem(START_KEY) || localTodayISO();
+
+  // افتح واجهة الموقع فورًا، ولا تجعل تنزيل نص القرآن يحجب الدخول إلى التطبيق.
+  showInstantQuranShell();
+  await new Promise(resolve=>requestAnimationFrame(resolve));
 
   try{
     const cached = localStorage.getItem(QURAN_STORE_KEY);
     if(cached){
       quran = JSON.parse(cached);
       validateQuran(quran);
-      $('loadMsg').textContent = 'تم تحميل القرآن من النسخة المحفوظة على جهازك.';
+      if($('loadMsg')) $('loadMsg').textContent = 'تم تحميل القرآن من النسخة المحفوظة على جهازك.';
     }else{
-      const response = await fetch(QURAN_API_URL,{cache:'no-store'});
+      // اسمح للمتصفح باستخدام كاش HTTP بدل إجبار تنزيل الملف من الإنترنت في كل مرة.
+      const response = await fetch(QURAN_API_URL,{cache:'force-cache'});
       if(!response.ok) throw new Error(`تعذر الاتصال بالمصدر (${response.status})`);
       const json = await response.json();
       if(!json || json.code !== 200 || !json.data) throw new Error('بيانات القرآن غير صالحة');
@@ -3130,11 +3193,13 @@ async function init(){
     // لا نبني قائمة 114 سورة عند بدء التطبيق حتى تظل البداية وورد اليوم خفيفين.
     // إذا كان المستخدم فتح صفحة الصوت أثناء اكتمال تحميل القرآن، نبنيها عندها فقط.
     if(!$('quranAudio')?.classList.contains('hidden')) initFullQuranAudioSection();
-    $('loading').classList.add('hidden');
     showToday();
   }catch(error){
     console.error(error);
-    $('loadMsg').innerHTML = `<span class="bad">حدثت مشكلة في تحميل النص. افتح الملف مع وجود إنترنت ثم اضغط «إعادة تحميل نص القرآن» من الإعدادات.</span><br>التفاصيل: ${escapeHTML(error.message)}`;
+    const message = `حدثت مشكلة في تحميل النص. افتح الملف مع وجود إنترنت ثم اضغط «إعادة تحميل نص القرآن» من الإعدادات. التفاصيل: ${error.message}`;
+    if($('loadMsg')) $('loadMsg').innerHTML = `<span class="bad">${escapeHTML(message)}</span>`;
+    const content = $('wirdContent');
+    if(content) content.innerHTML = `<div class="status bad" style="padding:14px 4px">${escapeHTML(message)}</div>`;
   }
 }
 
@@ -3236,7 +3301,7 @@ function switchMainApp(mode, animate=true){
     active.classList.remove('moduleFade');
     void active.offsetWidth;
     active.classList.add('moduleFade');
-    window.scrollTo({top:0,behavior:'smooth'});
+    window.scrollTo({top:0,behavior:'auto'});
   }
 }
 
@@ -3251,7 +3316,7 @@ function showPage(name){
   $('tab-'+name).classList.add('active');
   if(name === 'quran') openQuranMushaf();
   if(name === 'quranAudio') initFullQuranAudioSection();
-  window.scrollTo({top:0,behavior:'smooth'});
+  window.scrollTo({top:0,behavior:'auto'});
 }
 
 function syncAmountControls(){
@@ -4207,7 +4272,7 @@ function openBook(){
     const viewer = $('bookViewer');
     viewer.src = getBookPdfUrl();
     viewerCard.classList.remove('hidden');
-    viewerCard.scrollIntoView({behavior:'smooth',block:'start'});
+    viewerCard.scrollIntoView({behavior:'auto',block:'start'});
   }catch(error){
     console.error(error);
     alert('تعذر فتح الكتاب داخل البرنامج. جرّب زر حفظ نسخة PDF.');
@@ -4320,7 +4385,7 @@ init();
       const card=document.getElementById('zadBookViewerCard'),viewer=document.getElementById('zadBookViewer'),title=document.getElementById('zadBookViewerTitle');
       if(title)title.textContent=`${info.title} — صفحة ${window.__activeZadBookPage}`;
       if(viewer)viewer.src=`${info.url}#page=${window.__activeZadBookPage}&zoom=page-width`;
-      if(card){card.classList.remove('hidden');card.scrollIntoView({behavior:'smooth',block:'start'});}
+      if(card){card.classList.remove('hidden');card.scrollIntoView({behavior:'auto',block:'start'});}
     }catch(error){console.error(error);alert('تعذر فتح الكتاب. تأكد أن ملفات زاد المحارب مرفوعة بجوار index.html.');}
   };
   window.closeZadBook=function(){const card=document.getElementById('zadBookViewerCard'),viewer=document.getElementById('zadBookViewer');if(viewer)viewer.removeAttribute('src');if(card)card.classList.add('hidden');activeZadBookKey='';};
@@ -4434,7 +4499,7 @@ init();
         // انقل المستخدم مباشرة إلى محتوى القسم المختار، وخصوصًا مكتبة أدهم شرقاوي.
         requestAnimationFrame(() => {
           const target = sec.id === 'books' ? zadEl('zadBooksArea') : zadEl('zadTabs');
-          if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+          if(target) target.scrollIntoView({behavior:'auto', block:'start'});
         });
       };
       box.appendChild(tab);
@@ -4520,7 +4585,7 @@ init();
   window.zadGoPage = function(delta){
     zadCurrentPage = Math.max(1, zadCurrentPage + delta);
     zadRender();
-    zadEl('zadCards')?.scrollIntoView({behavior:'smooth',block:'start'});
+    zadEl('zadCards')?.scrollIntoView({behavior:'auto',block:'start'});
   };
 
   window.toggleZadPaletteMenu = function(event){
@@ -4812,7 +4877,7 @@ init();
   function themeKey(mode){return mode==='hadith'?HADITH_THEME_KEY:(mode==='heart'?HEART_THEME_KEY:(mode==='zad'?ZAD_THEME_KEY:(typeof THEME_KEY!=='undefined'?THEME_KEY:'wird_theme_v1')))}
   function savedValue(key,allowed,fallback){try{const v=localStorage.getItem(key);return allowed.includes(v)?v:fallback}catch(e){return fallback}}
   function applyModeLook(mode){
-    const palettes=(typeof AVAILABLE_PALETTES!=='undefined'?AVAILABLE_PALETTES:['emerald','mono','red','gold','purple','blue','rose','teal','orange']);
+    const palettes=(typeof AVAILABLE_PALETTES!=='undefined'?AVAILABLE_PALETTES:['emerald','mono','red','gold','purple','blue','rose','teal','orange','grad-emerald-blue','grad-purple-rose','grad-gold-orange','grad-blue-purple','grad-teal-blue','grad-red-purple','custom-gradient']);
     const p=savedValue(paletteKey(mode),palettes,'emerald');
     const th=savedValue(themeKey(mode),['dark','light'],'dark');
     if(typeof applyPalette==='function') applyPalette(p,false);
@@ -4840,7 +4905,7 @@ init();
     applyModeLook(finalMode);
     if(finalMode==='heart') heartUpdateProgress();
     if(finalMode==='hadith') hadithRenderOffline();
-    if(animate){const active=modules[finalMode];active.classList.remove('moduleFade');void active.offsetWidth;active.classList.add('moduleFade');window.scrollTo({top:0,behavior:'smooth'});}
+    if(animate){const active=modules[finalMode];active.classList.remove('moduleFade');void active.offsetWidth;active.classList.add('moduleFade');window.scrollTo({top:0,behavior:'auto'});}
   };
 
   window.toggleTheme=function(){
@@ -4885,7 +4950,7 @@ init();
     if(name==='azkar')heartRenderAzkarGroups();
     if(name==='gharib')heartRenderGharib();
     if(name==='tasbih')heartRenderTasbih();
-    window.scrollTo({top:0,behavior:'smooth'});
+    window.scrollTo({top:0,behavior:'auto'});
   };
 
   function heartDayIndex(){return Math.floor(new Date().setHours(0,0,0,0)/86400000)%dailyPacks.length}
@@ -5039,7 +5104,7 @@ ${r.duaSource}
     heart:{palette:'heart_palette_v1',theme:'heart_theme_v1'},
     hadith:{palette:'hadith_palette_v1',theme:'hadith_theme_v1'}
   };
-  const PALETTES=['emerald','mono','red','gold','purple','blue','rose','teal','orange'];
+  const PALETTES=['emerald','mono','red','gold','purple','blue','rose','teal','orange','grad-emerald-blue','grad-purple-rose','grad-gold-orange','grad-blue-purple','grad-teal-blue','grad-red-purple','custom-gradient'];
 
   function byId(id){return document.getElementById(id)}
   function currentMode(){
@@ -5195,7 +5260,7 @@ ${r.duaSource}
     const target=el('settingsSection-'+name);if(!target)return;const row=target.previousElementSibling;const opening=!target.classList.contains('open');
     document.querySelectorAll('.globalSettingsSubpanel.open').forEach(s=>{if(s!==target){s.classList.remove('open');s.previousElementSibling?.setAttribute('aria-expanded','false')}});
     target.classList.toggle('open',opening);row?.setAttribute('aria-expanded',opening?'true':'false');
-    if(name==='search'&&opening)setTimeout(()=>el('globalSettingsSearchInput')?.focus(),260);updateSettingsUI();
+    if(name==='search'&&opening)el('globalSettingsSearchInput')?.focus();updateSettingsUI();
   };
   window.settingsSetTheme=function(wanted){
     const current=document.documentElement.getAttribute('data-theme')==='light'?'light':'dark';if(current===wanted)return;
@@ -5232,11 +5297,11 @@ ${r.duaSource}
     let result;
     if(!animate){result=perform();updateSettingsUI();return result}
     if(typeof document.startViewTransition==='function'){
-      try{result=document.startViewTransition(()=>perform());window.scrollTo({top:0,behavior:'smooth'});setTimeout(updateSettingsUI,20);return result}catch(e){}
+      try{result=document.startViewTransition(()=>perform());window.scrollTo({top:0,behavior:'auto'});updateSettingsUI();return result}catch(e){}
     }
     result=perform();const active=el((['wird','zad','heart','hadith'].includes(modeName)?modeName:'wird')+'Module');
     if(active){active.classList.remove('smoothModuleEnter');void active.offsetWidth;active.classList.add('smoothModuleEnter');setTimeout(()=>active.classList.remove('smoothModuleEnter'),430)}
-    window.scrollTo({top:0,behavior:'smooth'});setTimeout(updateSettingsUI,20);return result;
+    window.scrollTo({top:0,behavior:'auto'});updateSettingsUI();return result;
   };
 
   /* انتقالات هادئة داخل صفحات الورد وزاد القلب. */
@@ -5249,7 +5314,7 @@ ${r.duaSource}
 
   document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeSalawat();globalCloseSettings()}});
   function init(){document.documentElement.removeAttribute('data-reader-size');settingsRenderSearch();updateSettingsUI()}
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(init,140));else setTimeout(init,140);
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
 </script>
 <style id="zad-device-layout-style">
@@ -5557,8 +5622,15 @@ html.zad-settings-final-v45 #globalSettingsToggle:focus{transform:none!important
     {icon:'📿',title:'المسبحة',desc:'عداد التسبيح والاستغفار',keys:'مسبحة تسبيح استغفار صلاة النبي',target:'heart-tasbih'},
     {icon:'📜',title:'موسوعة الحديث',desc:'البحث في الأحاديث',keys:'حديث أحاديث سنة الدرر',target:'hadith'}
   ];
-  const PALETTES=[['emerald','أخضر'],['mono','أسود'],['red','أحمر'],['gold','ذهبي'],['purple','بنفسجي'],['blue','أزرق'],['rose','وردي'],['teal','تركواز'],['orange','برتقالي']];
+  const PALETTES=[['emerald','أخضر'],['mono','أسود'],['red','أحمر'],['gold','ذهبي'],['purple','بنفسجي'],['blue','أزرق'],['rose','وردي'],['teal','تركواز'],['orange','برتقالي'],['grad-emerald-blue','أخضر × أزرق'],['grad-purple-rose','بنفسجي × وردي'],['grad-gold-orange','ذهبي × برتقالي'],['grad-blue-purple','أزرق × بنفسجي'],['grad-teal-blue','تركواز × أزرق'],['grad-red-purple','أحمر × بنفسجي']];
   const $=id=>document.getElementById(id);
+  const LOOK_KEYS={
+    wird:{palette:'wird_palette_v1',theme:'wird_theme_v1',gradient:'wird_gradient_v1'},
+    zad:{palette:'zad_palette_v1',theme:'zad_theme_v1',gradient:'zad_gradient_v1'},
+    heart:{palette:'heart_palette_v1',theme:'heart_theme_v1',gradient:'heart_gradient_v1'},
+    hadith:{palette:'hadith_palette_v1',theme:'hadith_theme_v1',gradient:'hadith_gradient_v1'}
+  };
+  let appearanceScope='section';
   let view='main';
 
   function normalize(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[\u064B-\u065F\u0670]/g,'').replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي')}
@@ -5577,7 +5649,7 @@ html.zad-settings-final-v45 #globalSettingsToggle:focus{transform:none!important
             <button class="v45MenuItem" type="button" data-open-view="salawat"><span class="v45MenuIcon">ﷺ</span><span class="v45MenuText"><b>صلِّ على النبي ﷺ</b><small>تذكرة قصيرة بالصلاة والسلام عليه</small></span><span class="v45Arrow">♡</span></button>
             <button class="v45MenuItem" type="button" data-open-view="about"><span class="v45MenuIcon">ℹ️</span><span class="v45MenuText"><b>عن البرنامج</b><small>معلومات مختصرة عن زاد الروح</small></span><span class="v45Arrow">‹</span></button>
           </div></div>
-          <div class="v45View" data-view="appearance"><div class="v45DetailTop"><h3 class="v45DetailTitle">المظهر والألوان</h3><button type="button" class="v45Back">↩ الرجوع للإعدادات</button></div><div class="v45Section"><h4 class="v45SectionTitle">الوضع</h4><div class="v45ThemeGrid"><button class="v45Choice" type="button" data-v45-theme="light">☀️ فاتح</button><button class="v45Choice" type="button" data-v45-theme="dark">🌙 داكن</button></div></div><div class="v45Section"><h4 class="v45SectionTitle">الألوان</h4><div class="v45PaletteGrid">${PALETTES.map(p=>`<button class="v45Choice" type="button" data-v45-palette="${p[0]}"><span class="v45Swatch ${p[0]}"></span>${p[1]}</button>`).join('')}</div></div></div>
+          <div class="v45View" data-view="appearance"><div class="v45DetailTop"><h3 class="v45DetailTitle">المظهر والألوان</h3><button type="button" class="v45Back">↩ الرجوع للإعدادات</button></div><div class="v45Section"><h4 class="v45SectionTitle">تطبيق التغيير على</h4><div class="v64ScopeGrid"><button class="v45Choice" type="button" data-v45-scope="section">هذا القسم فقط</button><button class="v45Choice" type="button" data-v45-scope="all">جميع الأقسام</button></div><div class="v64Hint">اختر «جميع الأقسام» لو عايز نفس اللون أو التدرج يظهر في الورد اليومي وزاد المحارب وزاد القلب وموسوعة الحديث معًا.</div></div><div class="v45Section"><h4 class="v45SectionTitle">الوضع</h4><div class="v45ThemeGrid"><button class="v45Choice" type="button" data-v45-theme="light">☀️ فاتح</button><button class="v45Choice" type="button" data-v45-theme="dark">🌙 داكن</button></div></div><div class="v45Section"><h4 class="v45SectionTitle">الألوان والتدرجات الجاهزة</h4><div class="v45PaletteGrid">${PALETTES.map(p=>`<button class="v45Choice" type="button" data-v45-palette="${p[0]}"><span class="v45Swatch ${p[0]}"></span>${p[1]}</button>`).join('')}</div></div><div class="v45Section"><h4 class="v45SectionTitle">ادمج لونين بنفسك</h4><div class="v64GradientBuilder" id="v64GradientBuilder"><label class="v64ColorField">اللون الأول<input id="v64GradientColor1" type="color" value="#24a966"></label><label class="v64ColorField">اللون الثاني<input id="v64GradientColor2" type="color" value="#247fb8"></label><button class="v64GradientApply" id="v64GradientApply" type="button" data-v45-custom-gradient-apply>تطبيق دمج اللونين</button></div><div class="v64Hint">يمكنك تكوين أي Gradient من لونين. يتم حفظه للقسم الحالي، أو لكل الأقسام لو اخترت «جميع الأقسام».</div></div></div>
           <div class="v45View" data-view="search"><div class="v45DetailTop"><h3 class="v45DetailTitle">البحث الشامل</h3><button type="button" class="v45Back">↩ الرجوع للإعدادات</button></div><input id="v45SearchInput" class="v45SearchInput" type="search" placeholder="اكتب: قرآن، أذكار، حديث..." autocomplete="off"><div id="v45SearchResults" class="v45SearchResults"></div></div>
           <div class="v45View" data-view="salawat"><div class="v45DetailTop"><h3 class="v45DetailTitle">صلِّ على النبي ﷺ</h3><button type="button" class="v45Back">↩ الرجوع للإعدادات</button></div><div class="v45Salawat"><div class="v45SalawatIcon">ﷺ</div><p class="v45SalawatText">اللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَى سَيِّدِنَا مُحَمَّدٍ ﷺ</p><button type="button" class="v45SalawatDone">صلّيتُ ﷺ</button><div class="v45Thanks" aria-live="polite"></div></div></div>
           <div class="v45View" data-view="about"><div class="v45DetailTop"><h3 class="v45DetailTitle">عن البرنامج</h3><button type="button" class="v45Back">↩ الرجوع للإعدادات</button></div><div class="v45Section v45About"><h3>🍃 زاد الروح</h3><p>ورد يومي، ورسائل إيمانية، وزاد للقلب، وموسوعة للحديث في ملف واحد خفيف يحفظ إعداداتك على جهازك.</p><div class="v45Prayer">لَا تَنْسَوْا مَنْ قَامَ عَلَى هَذَا المَوْقِعِ مِنْ صَالِحِ دُعَائِكُمْ.</div></div></div>
@@ -5598,13 +5670,20 @@ html.zad-settings-final-v45 #globalSettingsToggle:focus{transform:none!important
     const palette=document.documentElement.getAttribute('data-palette')||'emerald';
     document.querySelectorAll('[data-v45-theme]').forEach(b=>b.classList.toggle('active',b.dataset.v45Theme===theme));
     document.querySelectorAll('[data-v45-palette]').forEach(b=>b.classList.toggle('active',b.dataset.v45Palette===palette));
-    const sub=$('v45Subtitle');if(sub)sub.textContent='إعدادات '+modeName()+' — محفوظة بصورة مستقلة.';
+    document.querySelectorAll('[data-v45-scope]').forEach(b=>b.classList.toggle('active',b.dataset.v45Scope===appearanceScope));
+    const customBtn=$('v64GradientApply');if(customBtn)customBtn.classList.toggle('active',palette==='custom-gradient');
+    try{
+      const raw=localStorage.getItem(LOOK_KEYS[mode()].gradient);
+      if(raw){const g=JSON.parse(raw);if(g&&g.c1&&$('v64GradientColor1'))$('v64GradientColor1').value=g.c1;if(g&&g.c2&&$('v64GradientColor2'))$('v64GradientColor2').value=g.c2;}
+    }catch(e){}
+    updateGradientPreview();
+    const sub=$('v45Subtitle');if(sub)sub.textContent=appearanceScope==='all'?'إعدادات جميع الأقسام — سيُطبَّق التغيير على الكل.':'إعدادات '+modeName()+' — محفوظة بصورة مستقلة.';
   }
   function show(name){
     view=name||'main';
     document.querySelectorAll('#zadSettingsV45 .v45View').forEach(v=>v.classList.toggle('active',v.dataset.view===view));
     const body=document.querySelector('#zadSettingsV45 .v45Body');if(body)body.scrollTop=0;
-    if(view==='search'){renderSearch();setTimeout(()=>$('v45SearchInput')?.focus(),30)}
+    if(view==='search'){renderSearch();$('v45SearchInput')?.focus()}
     refresh();
   }
   function open(){
@@ -5629,11 +5708,29 @@ html.zad-settings-final-v45 #globalSettingsToggle:focus{transform:none!important
     if(typeof window.settingsNavigate==='function'){window.settingsNavigate(target);return}
     if(target==='zad')window.switchMainApp?.('zad');else if(target==='hadith')window.switchMainApp?.('hadith');
   }
-  function setTheme(wanted){
-    const current=document.documentElement.getAttribute('data-theme')==='light'?'light':'dark';
-    if(current!==wanted)window.globalToggleTheme?.();refresh();
+  function targetModes(){return appearanceScope==='all'?Object.keys(LOOK_KEYS):[mode()]}
+  function saveLook(kind,value){for(const m of targetModes()){try{localStorage.setItem(LOOK_KEYS[m][kind],value)}catch(e){}}}
+  function setScope(value){appearanceScope=value==='all'?'all':'section';refresh()}
+  function updateGradientPreview(){
+    const b=$('v64GradientApply'),c1=$('v64GradientColor1')?.value||'#24a966',c2=$('v64GradientColor2')?.value||'#247fb8';
+    if(b){b.style.setProperty('--v64-preview-1',c1);b.style.setProperty('--v64-preview-2',c2);}
   }
-  function setPalette(name){window.globalChoosePalette?.(name);refresh()}
+  function setTheme(wanted){
+    const final=wanted==='light'?'light':'dark';saveLook('theme',final);
+    if(typeof window.applyTheme==='function')window.applyTheme(final,false);else document.documentElement.setAttribute('data-theme',final);
+    refresh();
+  }
+  function setPalette(name){
+    saveLook('palette',name);
+    if(typeof window.applyPalette==='function')window.applyPalette(name,false);else document.documentElement.setAttribute('data-palette',name);
+    window.zadApplyGradientLook?.();refresh();
+  }
+  function applyCustomGradient(){
+    const c1=$('v64GradientColor1')?.value||'#24a966',c2=$('v64GradientColor2')?.value||'#247fb8';
+    for(const m of targetModes()){try{localStorage.setItem(LOOK_KEYS[m].palette,'custom-gradient');localStorage.setItem(LOOK_KEYS[m].gradient,JSON.stringify({c1,c2}))}catch(e){}}
+    if(typeof window.applyPalette==='function')window.applyPalette('custom-gradient',false);else document.documentElement.setAttribute('data-palette','custom-gradient');
+    window.zadApplyGradientLook?.();refresh();
+  }
 
   function init(){
     document.documentElement.classList.add('zad-settings-final-v45');
@@ -5650,13 +5747,17 @@ html.zad-settings-final-v45 #globalSettingsToggle:focus{transform:none!important
       const openBtn=e.target.closest('[data-open-view]');if(openBtn){e.preventDefault();show(openBtn.dataset.openView);return}
       if(e.target.closest('.v45Close')){e.preventDefault();close();return}
       if(e.target.closest('.v45Back')){e.preventDefault();show('main');return}
+      const scope=e.target.closest('[data-v45-scope]');if(scope){e.preventDefault();setScope(scope.dataset.v45Scope);return}
       const theme=e.target.closest('[data-v45-theme]');if(theme){e.preventDefault();setTheme(theme.dataset.v45Theme);return}
       const palette=e.target.closest('[data-v45-palette]');if(palette){e.preventDefault();setPalette(palette.dataset.v45Palette);return}
+      if(e.target.closest('[data-v45-custom-gradient-apply]')){e.preventDefault();applyCustomGradient();return}
       if(e.target.closest('.v45SalawatDone')){e.preventDefault();const t=modal.querySelector('.v45Thanks');if(t)t.textContent='تقبّل الله منك، وكتب لك الأجر 🤍';return}
       const result=e.target.closest('[data-v45-target]');if(result){e.preventDefault();navigate(result.dataset.v45Target);return}
       if(e.target===modal)close();
     });
     $('v45SearchInput')?.addEventListener('input',renderSearch);
+    $('v64GradientColor1')?.addEventListener('input',updateGradientPreview);
+    $('v64GradientColor2')?.addEventListener('input',updateGradientPreview);
     document.addEventListener('keydown',e=>{if(e.key==='Escape'&&isOpen()){e.preventDefault();view==='main'?close():show('main')}});
     window.globalToggleSettings=function(e){e?.preventDefault?.();isOpen()?close():open()};
     window.globalCloseSettings=close;
@@ -6303,5 +6404,54 @@ ${r.action}`;
 </script>
 <!-- /ZAD_V62_HEART_EXPANDED_CONTENT -->
 
+
+<script id="zad-gradient-runtime-v64">
+(function(){
+  'use strict';
+  const ROOT=document.documentElement;
+  const KEYS={
+    wird:{palette:'wird_palette_v1',gradient:'wird_gradient_v1'},zad:{palette:'zad_palette_v1',gradient:'zad_gradient_v1'},
+    heart:{palette:'heart_palette_v1',gradient:'heart_gradient_v1'},hadith:{palette:'hadith_palette_v1',gradient:'hadith_gradient_v1'}
+  };
+  function mode(){for(const m of ['hadith','heart','zad','wird']){const n=document.getElementById(m+'Module');if(n&&!n.classList.contains('hidden'))return m}return 'wird'}
+  function hexToRgb(hex){const m=/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(String(hex||''));return m?`${parseInt(m[1],16)},${parseInt(m[2],16)},${parseInt(m[3],16)}`:'36,169,102'}
+  function applyCurrent(){
+    const m=mode();let p='emerald';try{p=localStorage.getItem(KEYS[m].palette)||'emerald'}catch(e){}
+    if(p==='custom-gradient'){
+      let g={c1:'#24a966',c2:'#247fb8'};try{const raw=JSON.parse(localStorage.getItem(KEYS[m].gradient)||'null');if(raw&&raw.c1&&raw.c2)g=raw}catch(e){}
+      ROOT.style.setProperty('--grad-1',g.c1);ROOT.style.setProperty('--grad-2',g.c2);ROOT.style.setProperty('--active-accent-rgb',hexToRgb(g.c1));
+    }else{
+      ROOT.style.removeProperty('--grad-1');ROOT.style.removeProperty('--grad-2');ROOT.style.removeProperty('--active-accent-rgb');
+    }
+  }
+  window.zadApplyGradientLook=applyCurrent;
+  const previous=window.switchMainApp;
+  if(typeof previous==='function')window.switchMainApp=function(){const r=previous.apply(this,arguments);applyCurrent();return r};
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>applyCurrent(),{once:true});else applyCurrent();
+})();
+</script>
+
+
+<style id="zad-zero-delay-v66-style">
+/* V66 — استجابة فورية: لا انتقالات زمنية عند تغيير اللون أو فتح القوائم/الصفحات. */
+html{scroll-behavior:auto!important}
+html.zad-zero-delay-v66 *,
+html.zad-zero-delay-v66 *::before,
+html.zad-zero-delay-v66 *::after{
+  transition-duration:0s!important;
+  transition-delay:0s!important;
+}
+html.zad-zero-delay-v66 .pageSoftEnter,
+html.zad-zero-delay-v66 .smoothModuleEnter,
+html.zad-zero-delay-v66 .moduleFade{animation:none!important}
+</style>
+<script id="zad-zero-delay-v66-script">
+(function(){
+  'use strict';
+  document.documentElement.classList.add('zad-zero-delay-v66');
+})();
+</script>
 </body>
 </html>
+
+<!-- ZAD_V65_INSTANT_START: immediate shell + cached Quran fetch -->
