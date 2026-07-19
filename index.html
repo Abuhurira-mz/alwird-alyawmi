@@ -25,7 +25,7 @@
   })();
   </script>
   <meta name="theme-color" content="#0a2419" />
-  <title>زاد الروح - V1.1</title>
+  <title>V 1.2 - زادُ الروح</title>
   <style>
     :root{
       --bg:#06140e;
@@ -2352,7 +2352,7 @@ html.zad-v29-final .zadPanel,html.zad-v29-final .heartPanel,html.zad-v29-final .
 }
 </style>
 
-<meta name="zad-build" content="V1.1-v66-zero-delay">
+<meta name="zad-build" content="V1.2-v66-zero-delay">
 
 <style id="zad-gradient-palettes-v64-style">
 /* V64 — تدرجات ثنائية اللون مع الحفاظ على وضوح النصوص وباقي التصميم. */
@@ -2444,6 +2444,22 @@ html[data-palette^="grad-"] #wirdModule>header,html[data-palette="custom-gradien
               <div id="globalSettingsSearchResults" class="globalSettingsSearchResults"></div>
             </div>
 
+
+
+
+            <button class="globalSettingsRow fontSettingsRow" type="button" onclick="toggleGlobalSettingsSection('font')" aria-expanded="false">
+              <span class="settingsRowIcon fontSettingsIcon">Aa</span><span class="settingsRowText"><b>حجم الخط</b><small>تكبير وتصغير الخط: صغير، عادي، كبير أو كبير جدًا</small></span><span class="settingsChevron">⌄</span>
+            </button>
+            <div id="settingsSection-font" class="globalSettingsSubpanel fontSettingsPanel">
+              <div class="settingsLabel">حجم النص في البرنامج</div>
+              <div class="settingsChoiceGrid zadReaderSizeGrid">
+                <button type="button" data-reader-size-choice="small" onclick="settingsSetReaderSize('small')">صغير</button>
+                <button type="button" data-reader-size-choice="normal" onclick="settingsSetReaderSize('normal')">عادي</button>
+                <button type="button" data-reader-size-choice="medium" onclick="settingsSetReaderSize('medium')">كبير</button>
+                <button type="button" data-reader-size-choice="large" onclick="settingsSetReaderSize('large')">كبير جدًا</button>
+              </div>
+              <div class="settingsHint">الحجم «عادي» هو الافتراضي. ويُحفَظ اختيارك تلقائيًا على الجهاز، مع ضبط الأحجام الكبيرة لتظل داخل البطاقات والصفحة.</div>
+            </div>
 
             <button class="globalSettingsRow" type="button" onclick="showSalawat()" aria-label="الصلاة على النبي صلى الله عليه وسلم">
               <span class="settingsRowIcon">ﷺ</span><span class="settingsRowText"><b>صلِّ على النبي ﷺ</b><small>تذكرة قصيرة بالصلاة والسلام على رسول الله ﷺ</small></span><span class="settingsChevron">♡</span>
@@ -5197,8 +5213,8 @@ ${r.duaSource}
     applySavedLook(currentMode());
     refreshControls();
   }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>setTimeout(init,80));
-  else setTimeout(init,80);
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init,{once:true});
+  else init();
 })();
 </script>
 
@@ -5240,12 +5256,8 @@ ${r.duaSource}
     document.querySelectorAll('[data-settings-palette]').forEach(b=>b.classList.toggle('active',b.dataset.settingsPalette===palette));
   }
   function smoothVisualUpdate(change){
-    if(typeof document.startViewTransition==='function'){
-      try{return document.startViewTransition(()=>change())}catch(e){}
-    }
-    const r=root();if(!r){change();return}
-    r.classList.add('visual-soft-fade');
-    setTimeout(()=>{change();requestAnimationFrame(()=>requestAnimationFrame(()=>r.classList.remove('visual-soft-fade')))},105);
+    /* استجابة فورية بلا انتظار أو View Transition. */
+    return change();
   }
   window.globalToggleSettings=function(event){
     if(event)event.stopPropagation();const p=panel(),b=el('globalSettingsToggle');if(!p||!b)return;
@@ -5290,22 +5302,17 @@ ${r.duaSource}
   };
   window.closeSalawat=function(){const o=el('salawatOverlay');if(!o)return;o.classList.remove('show');o.setAttribute('aria-hidden','true')};
 
-  /* انتقال سلس بين الأقسام الرئيسية مع دعم View Transitions عند توفرها. */
+  /* تنقل فوري بين الأقسام الرئيسية بدون View Transitions أو مؤقتات. */
   const previousSwitch=window.switchMainApp;
   if(typeof previousSwitch==='function')window.switchMainApp=function(modeName,animate=true){
-    const perform=()=>previousSwitch.call(this,modeName,false);
-    let result;
-    if(!animate){result=perform();updateSettingsUI();return result}
-    if(typeof document.startViewTransition==='function'){
-      try{result=document.startViewTransition(()=>perform());window.scrollTo({top:0,behavior:'auto'});updateSettingsUI();return result}catch(e){}
-    }
-    result=perform();const active=el((['wird','zad','heart','hadith'].includes(modeName)?modeName:'wird')+'Module');
-    if(active){active.classList.remove('smoothModuleEnter');void active.offsetWidth;active.classList.add('smoothModuleEnter');setTimeout(()=>active.classList.remove('smoothModuleEnter'),430)}
-    window.scrollTo({top:0,behavior:'auto'});updateSettingsUI();return result;
+    const result=previousSwitch.call(this,modeName,false);
+    window.scrollTo({top:0,behavior:'auto'});
+    updateSettingsUI();
+    return result;
   };
 
-  /* انتقالات هادئة داخل صفحات الورد وزاد القلب. */
-  function animateVisible(selector){const node=document.querySelector(selector);if(!node)return;node.classList.remove('pageSoftEnter');void node.offsetWidth;node.classList.add('pageSoftEnter');setTimeout(()=>node.classList.remove('pageSoftEnter'),360)}
+  /* لا نضيف أنيميشن زمني عند فتح الصفحات الداخلية. */
+  function animateVisible(selector){return;}
   const previousShowPage=window.showPage;
   if(typeof previousShowPage==='function')window.showPage=function(name){const r=previousShowPage.apply(this,arguments);animateVisible('#wirdModule .page:not(.hidden)');return r};
   const previousHeartShowPage=window.heartShowPage;
@@ -5313,7 +5320,7 @@ ${r.duaSource}
   const zadMessages=el('zadMessages');if(zadMessages){new MutationObserver(()=>animateVisible('#zadMessages')).observe(zadMessages,{childList:true,subtree:false})}
 
   document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeSalawat();globalCloseSettings()}});
-  function init(){document.documentElement.removeAttribute('data-reader-size');settingsRenderSearch();updateSettingsUI()}
+  function init(){settingsRenderSearch();updateSettingsUI()}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
 </script>
@@ -5578,6 +5585,7 @@ html.zad-settings-final-v45 #globalSettingsToggle:focus{transform:none!important
 .v45Section{padding:12px;border:1px solid var(--line);border-radius:17px;background:rgba(var(--active-accent-rgb),.035);margin-bottom:10px}
 .v45SectionTitle{margin:0 0 9px;font-size:14px;color:var(--text)}
 .v45ThemeGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.v45FontGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .v45PaletteGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .v45Choice{
   min-height:45px;padding:8px 6px;display:flex;align-items:center;justify-content:center;gap:6px;
@@ -5645,11 +5653,13 @@ html.zad-settings-final-v45 #globalSettingsToggle:focus{transform:none!important
         <div class="v45Body">
           <div class="v45View active" data-view="main"><div class="v45MainGrid">
             <button class="v45MenuItem" type="button" data-open-view="appearance"><span class="v45MenuIcon">🎨</span><span class="v45MenuText"><b>المظهر والألوان</b><small>الوضع الفاتح أو الداكن ولون كل قسم</small></span><span class="v45Arrow">‹</span></button>
+            <button class="v45MenuItem" type="button" data-open-view="font"><span class="v45MenuIcon">Aa</span><span class="v45MenuText"><b>حجم الخط</b><small>صغير، عادي، كبير أو كبير جدًا</small></span><span class="v45Arrow">‹</span></button>
             <button class="v45MenuItem" type="button" data-open-view="search"><span class="v45MenuIcon">🔍</span><span class="v45MenuText"><b>البحث الشامل</b><small>انتقل بسرعة إلى أي قسم أو أداة</small></span><span class="v45Arrow">‹</span></button>
             <button class="v45MenuItem" type="button" data-open-view="salawat"><span class="v45MenuIcon">ﷺ</span><span class="v45MenuText"><b>صلِّ على النبي ﷺ</b><small>تذكرة قصيرة بالصلاة والسلام عليه</small></span><span class="v45Arrow">♡</span></button>
             <button class="v45MenuItem" type="button" data-open-view="about"><span class="v45MenuIcon">ℹ️</span><span class="v45MenuText"><b>عن البرنامج</b><small>معلومات مختصرة عن زاد الروح</small></span><span class="v45Arrow">‹</span></button>
           </div></div>
           <div class="v45View" data-view="appearance"><div class="v45DetailTop"><h3 class="v45DetailTitle">المظهر والألوان</h3><button type="button" class="v45Back">↩ الرجوع للإعدادات</button></div><div class="v45Section"><h4 class="v45SectionTitle">تطبيق التغيير على</h4><div class="v64ScopeGrid"><button class="v45Choice" type="button" data-v45-scope="section">هذا القسم فقط</button><button class="v45Choice" type="button" data-v45-scope="all">جميع الأقسام</button></div><div class="v64Hint">اختر «جميع الأقسام» لو عايز نفس اللون أو التدرج يظهر في الورد اليومي وزاد المحارب وزاد القلب وموسوعة الحديث معًا.</div></div><div class="v45Section"><h4 class="v45SectionTitle">الوضع</h4><div class="v45ThemeGrid"><button class="v45Choice" type="button" data-v45-theme="light">☀️ فاتح</button><button class="v45Choice" type="button" data-v45-theme="dark">🌙 داكن</button></div></div><div class="v45Section"><h4 class="v45SectionTitle">الألوان والتدرجات الجاهزة</h4><div class="v45PaletteGrid">${PALETTES.map(p=>`<button class="v45Choice" type="button" data-v45-palette="${p[0]}"><span class="v45Swatch ${p[0]}"></span>${p[1]}</button>`).join('')}</div></div><div class="v45Section"><h4 class="v45SectionTitle">ادمج لونين بنفسك</h4><div class="v64GradientBuilder" id="v64GradientBuilder"><label class="v64ColorField">اللون الأول<input id="v64GradientColor1" type="color" value="#24a966"></label><label class="v64ColorField">اللون الثاني<input id="v64GradientColor2" type="color" value="#247fb8"></label><button class="v64GradientApply" id="v64GradientApply" type="button" data-v45-custom-gradient-apply>تطبيق دمج اللونين</button></div><div class="v64Hint">يمكنك تكوين أي Gradient من لونين. يتم حفظه للقسم الحالي، أو لكل الأقسام لو اخترت «جميع الأقسام».</div></div></div>
+          <div class="v45View" data-view="font"><div class="v45DetailTop"><h3 class="v45DetailTitle">حجم الخط</h3><button type="button" class="v45Back">↩ الرجوع للإعدادات</button></div><div class="v45Section"><h4 class="v45SectionTitle">اختر حجم النص في البرنامج</h4><div class="v45FontGrid"><button class="v45Choice" type="button" data-v45-reader-size="small" data-reader-size-choice="small">صغير</button><button class="v45Choice" type="button" data-v45-reader-size="normal" data-reader-size-choice="normal">عادي</button><button class="v45Choice" type="button" data-v45-reader-size="medium" data-reader-size-choice="medium">كبير</button><button class="v45Choice" type="button" data-v45-reader-size="large" data-reader-size-choice="large">كبير جدًا</button></div><div class="v64Hint">الحجم «عادي» هو الافتراضي، ويتم حفظ اختيارك تلقائيًا على هذا الجهاز.</div></div></div>
           <div class="v45View" data-view="search"><div class="v45DetailTop"><h3 class="v45DetailTitle">البحث الشامل</h3><button type="button" class="v45Back">↩ الرجوع للإعدادات</button></div><input id="v45SearchInput" class="v45SearchInput" type="search" placeholder="اكتب: قرآن، أذكار، حديث..." autocomplete="off"><div id="v45SearchResults" class="v45SearchResults"></div></div>
           <div class="v45View" data-view="salawat"><div class="v45DetailTop"><h3 class="v45DetailTitle">صلِّ على النبي ﷺ</h3><button type="button" class="v45Back">↩ الرجوع للإعدادات</button></div><div class="v45Salawat"><div class="v45SalawatIcon">ﷺ</div><p class="v45SalawatText">اللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَى سَيِّدِنَا مُحَمَّدٍ ﷺ</p><button type="button" class="v45SalawatDone">صلّيتُ ﷺ</button><div class="v45Thanks" aria-live="polite"></div></div></div>
           <div class="v45View" data-view="about"><div class="v45DetailTop"><h3 class="v45DetailTitle">عن البرنامج</h3><button type="button" class="v45Back">↩ الرجوع للإعدادات</button></div><div class="v45Section v45About"><h3>🍃 زاد الروح</h3><p>ورد يومي، ورسائل إيمانية، وزاد للقلب، وموسوعة للحديث في ملف واحد خفيف يحفظ إعداداتك على جهازك.</p><div class="v45Prayer">لَا تَنْسَوْا مَنْ قَامَ عَلَى هَذَا المَوْقِعِ مِنْ صَالِحِ دُعَائِكُمْ.</div></div></div>
@@ -5671,6 +5681,8 @@ html.zad-settings-final-v45 #globalSettingsToggle:focus{transform:none!important
     document.querySelectorAll('[data-v45-theme]').forEach(b=>b.classList.toggle('active',b.dataset.v45Theme===theme));
     document.querySelectorAll('[data-v45-palette]').forEach(b=>b.classList.toggle('active',b.dataset.v45Palette===palette));
     document.querySelectorAll('[data-v45-scope]').forEach(b=>b.classList.toggle('active',b.dataset.v45Scope===appearanceScope));
+    const readerSize=document.documentElement.getAttribute('data-reader-size')||'normal';
+    document.querySelectorAll('[data-v45-reader-size]').forEach(b=>{const active=b.dataset.v45ReaderSize===readerSize;b.classList.toggle('active',active);b.setAttribute('aria-pressed',active?'true':'false')});
     const customBtn=$('v64GradientApply');if(customBtn)customBtn.classList.toggle('active',palette==='custom-gradient');
     try{
       const raw=localStorage.getItem(LOOK_KEYS[mode()].gradient);
@@ -5749,6 +5761,7 @@ html.zad-settings-final-v45 #globalSettingsToggle:focus{transform:none!important
       if(e.target.closest('.v45Back')){e.preventDefault();show('main');return}
       const scope=e.target.closest('[data-v45-scope]');if(scope){e.preventDefault();setScope(scope.dataset.v45Scope);return}
       const theme=e.target.closest('[data-v45-theme]');if(theme){e.preventDefault();setTheme(theme.dataset.v45Theme);return}
+      const reader=e.target.closest('[data-v45-reader-size]');if(reader){e.preventDefault();if(typeof window.settingsSetReaderSize==='function')window.settingsSetReaderSize(reader.dataset.v45ReaderSize);else document.documentElement.setAttribute('data-reader-size',reader.dataset.v45ReaderSize);refresh();return}
       const palette=e.target.closest('[data-v45-palette]');if(palette){e.preventDefault();setPalette(palette.dataset.v45Palette);return}
       if(e.target.closest('[data-v45-custom-gradient-apply]')){e.preventDefault();applyCustomGradient();return}
       if(e.target.closest('.v45SalawatDone')){e.preventDefault();const t=modal.querySelector('.v45Thanks');if(t)t.textContent='تقبّل الله منك، وكتب لك الأجر 🤍';return}
@@ -6440,6 +6453,8 @@ html.zad-zero-delay-v66 *::before,
 html.zad-zero-delay-v66 *::after{
   transition-duration:0s!important;
   transition-delay:0s!important;
+  animation-duration:0s!important;
+  animation-delay:0s!important;
 }
 html.zad-zero-delay-v66 .pageSoftEnter,
 html.zad-zero-delay-v66 .smoothModuleEnter,
@@ -6740,7 +6755,630 @@ html.zad-zero-delay-v66 .moduleFade{animation:none!important}
 </style>
 <!-- ZAD_V68_DESKTOP_PRO_LAYOUT_END -->
 
+
+
+<!-- ZAD_UPLOADED_FONT_SCROLL_FINAL_START -->
+<style id="zad-uploaded-font-scroll-final-style">
+/* هذا التعديل مبني على الملف المرفوع نفسه: لا يغيّر التخطيط، ويعالج الخط والسكرول فقط. */
+
+/* ===== سكرول متناسق مع لوحة الألوان الحالية بدل الشريط الأبيض ===== */
+html,
+body,
+.mainTopBar,
+.globalSettingsPanel,
+.globalSettingsList,
+.globalSettingsSearchResults,
+.palettePanel,
+#zadModule .zadPalettePanel,
+.heartPalettePanel,
+.hadithPalettePanel,
+.bookViewer{
+  scrollbar-width:thin;
+  scrollbar-color:
+    color-mix(in srgb,var(--green) 76%,var(--gold) 24%)
+    color-mix(in srgb,var(--card) 94%,var(--bg) 6%);
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+.mainTopBar::-webkit-scrollbar,
+.globalSettingsPanel::-webkit-scrollbar,
+.globalSettingsList::-webkit-scrollbar,
+.globalSettingsSearchResults::-webkit-scrollbar,
+.palettePanel::-webkit-scrollbar,
+#zadModule .zadPalettePanel::-webkit-scrollbar,
+.heartPalettePanel::-webkit-scrollbar,
+.hadithPalettePanel::-webkit-scrollbar,
+.bookViewer::-webkit-scrollbar{
+  width:10px;
+  height:10px;
+}
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track,
+.mainTopBar::-webkit-scrollbar-track,
+.globalSettingsPanel::-webkit-scrollbar-track,
+.globalSettingsList::-webkit-scrollbar-track,
+.globalSettingsSearchResults::-webkit-scrollbar-track,
+.palettePanel::-webkit-scrollbar-track,
+#zadModule .zadPalettePanel::-webkit-scrollbar-track,
+.heartPalettePanel::-webkit-scrollbar-track,
+.hadithPalettePanel::-webkit-scrollbar-track,
+.bookViewer::-webkit-scrollbar-track{
+  background:color-mix(in srgb,var(--card) 94%,var(--bg) 6%);
+  border-radius:999px;
+}
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb,
+.mainTopBar::-webkit-scrollbar-thumb,
+.globalSettingsPanel::-webkit-scrollbar-thumb,
+.globalSettingsList::-webkit-scrollbar-thumb,
+.globalSettingsSearchResults::-webkit-scrollbar-thumb,
+.palettePanel::-webkit-scrollbar-thumb,
+#zadModule .zadPalettePanel::-webkit-scrollbar-thumb,
+.heartPalettePanel::-webkit-scrollbar-thumb,
+.hadithPalettePanel::-webkit-scrollbar-thumb,
+.bookViewer::-webkit-scrollbar-thumb{
+  background:linear-gradient(180deg,
+    color-mix(in srgb,var(--green) 82%,var(--gold) 18%),
+    color-mix(in srgb,var(--green) 64%,var(--card2) 36%));
+  border:2px solid color-mix(in srgb,var(--card) 94%,var(--bg) 6%);
+  border-radius:999px;
+}
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover,
+.mainTopBar::-webkit-scrollbar-thumb:hover,
+.globalSettingsPanel::-webkit-scrollbar-thumb:hover{
+  background:color-mix(in srgb,var(--green) 72%,var(--gold) 28%);
+}
+html::-webkit-scrollbar-corner,
+body::-webkit-scrollbar-corner{background:var(--bg)}
+
+/* السايدبار في الكمبيوتر يحافظ على سلوكه الحالي مع سكرول رفيع ثابت اللون. */
+@media(min-width:900px){
+  html[data-device-mode="desktop"] .mainTopBar{
+    scrollbar-width:thin!important;
+    scrollbar-gutter:stable!important;
+  }
+}
+
+/* ===== نظام حجم الخط: أربع درجات مضبوطة وغير مبالغ فيها ===== */
+html[data-reader-size="medium"]{
+  --reader-body:18px;
+  --reader-ui:16.5px;
+  --reader-meta:14.5px;
+  --reader-sub:16px;
+  --reader-quran:35px;
+  --reader-bismillah:33px;
+  --reader-hadith:26px;
+  --reader-zad:19.5px;
+  --reader-heart:18px;
+  --reader-heart-verse:27px;
+  --reader-heading1:35px;
+  --reader-heading2:25px;
+  --reader-heading3:21px;
+}
+html[data-reader-size="small"]{
+  --reader-body:16px;
+  --reader-ui:15px;
+  --reader-meta:13px;
+  --reader-sub:14.5px;
+  --reader-quran:31px;
+  --reader-bismillah:29px;
+  --reader-hadith:22px;
+  --reader-zad:17px;
+  --reader-heart:16px;
+  --reader-heart-verse:23px;
+  --reader-heading1:31px;
+  --reader-heading2:22px;
+  --reader-heading3:19px;
+}
+html:not([data-reader-size]),
+html[data-reader-size="normal"]{
+  --reader-body:17px;
+  --reader-ui:15.7px;
+  --reader-meta:13.8px;
+  --reader-sub:15.2px;
+  --reader-quran:33px;
+  --reader-bismillah:31px;
+  --reader-hadith:24px;
+  --reader-zad:18px;
+  --reader-heart:17px;
+  --reader-heart-verse:25px;
+  --reader-heading1:33px;
+  --reader-heading2:23.5px;
+  --reader-heading3:20px;
+}
+html[data-reader-size="large"]{
+  --reader-body:19.5px;
+  --reader-ui:18px;
+  --reader-meta:15.5px;
+  --reader-sub:17px;
+  --reader-quran:39px;
+  --reader-bismillah:37px;
+  --reader-hadith:29px;
+  --reader-zad:22px;
+  --reader-heart:20px;
+  --reader-heart-verse:30px;
+  --reader-heading1:38px;
+  --reader-heading2:27px;
+  --reader-heading3:23px;
+}
+
+body{font-size:var(--reader-body)!important;line-height:1.9}
+button,.btn,input,select,textarea{font-size:var(--reader-ui)!important}
+label,.status,.pill,.creator,.sub,.settingsHint,.settingsLabel,
+.settingsRowText small,.ayahMeta,.ayahAudioStatus,.bookMeta,
+#zadModule .zadSource,#zadModule .zadLesson,#zadModule .zadMeta,
+.heartIntro,.heartSource,.heartDhikrMeta,.hadithSourceNote,
+.hadithCard .hadithMeta,.hadithCard .hadithSource,.hadithCard .hadithGrade,
+#hadithApiStatus,.hadithPagerNote{
+  font-size:var(--reader-meta)!important;
+  line-height:1.85!important;
+}
+.sub{font-size:var(--reader-sub)!important}
+h1,.zadHero h1,.heartHero h1,.hadithHero h1{font-size:var(--reader-heading1)!important;line-height:1.4!important}
+h2,.surahTitle,.heartPanelTitle,.hadithPanel h2,#zadModule .zadDaily h2{font-size:var(--reader-heading2)!important;line-height:1.55!important}
+h3,.heartFeature h3,#zadModule .zadMessageCard h3{font-size:var(--reader-heading3)!important;line-height:1.6!important}
+
+/* القرآن: أوضح من الملف المرفوع من دون تضخيم يخرج عن البطاقة. */
+.ayahText{
+  font-size:var(--reader-quran)!important;
+  line-height:2.2!important;
+  max-width:100%!important;
+  overflow-wrap:normal!important;
+  word-break:normal!important;
+}
+.bismillah{font-size:var(--reader-bismillah)!important;line-height:2!important}
+.tafsirBox{font-size:var(--reader-body)!important;line-height:2!important}
+
+/* زاد المحارب. */
+#zadModule .zadText,
+#zadModule .zadDaily p{
+  font-size:var(--reader-zad)!important;
+  line-height:2.05!important;
+}
+#zadModule .zadBookTile p{font-size:var(--reader-meta)!important;line-height:1.9!important}
+
+/* زاد القلب. */
+.heartFeature p,
+.heartPanel p,
+.heartPanel li,
+.heartDailyItem p,
+.heartWord p{
+  font-size:var(--reader-heart)!important;
+  line-height:1.95!important;
+}
+.heartRemedyResult .verse,
+.heartDhikrText,
+.heartWord h3{
+  font-size:var(--reader-heart-verse)!important;
+  line-height:2!important;
+}
+.heartDailyItem small{font-size:var(--reader-meta)!important}
+
+/* موسوعة الحديث. */
+.hadithCard .hadithText,
+#hadithOfficialResults .hadithText,
+#hadithOfficialResults .result,
+#hadithOfficialResults>div{
+  font-size:var(--reader-hadith)!important;
+  line-height:2.02!important;
+}
+
+/* التنقل والإعدادات: تكبير محسوب حتى لا تتكسر الأزرار. */
+.mainAppSwitcher button{font-size:var(--reader-ui)!important}
+.settingsRowText b{font-size:var(--reader-ui)!important}
+.globalSearchResult b{font-size:var(--reader-meta)!important}
+.globalSearchResult small{font-size:12.5px!important}
+
+.zadReaderSizeGrid{
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:8px!important;
+}
+.zadReaderSizeGrid button{
+  min-height:46px;
+  font-size:14px!important;
+  white-space:nowrap;
+}
+.zadReaderSizeGrid button.active{
+  outline:2px solid var(--green)!important;
+  outline-offset:1px!important;
+  background:rgba(var(--active-accent-rgb),.12)!important;
+  color:var(--text)!important;
+}
+
+@media(max-width:620px){
+  .zadReaderSizeGrid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  /* على الهاتف نحافظ على الراحة ومنع الأحجام الكبيرة من الضغط على العرض. */
+  html[data-reader-size="large"]{
+    --reader-quran:35px;
+    --reader-bismillah:33px;
+    --reader-hadith:27px;
+    --reader-zad:20px;
+    --reader-heart-verse:28px;
+  }
+}
+</style>
+<script id="zad-uploaded-font-scroll-final-script">
+(function(){
+  'use strict';
+  const KEY='zadReaderSizeFinalV1';
+  const ALLOWED=['small','normal','medium','large'];
+  const root=document.documentElement;
+
+  function safeGet(){
+    try{const v=localStorage.getItem(KEY);return ALLOWED.includes(v)?v:null}catch(e){return null}
+  }
+  function safeSet(v){try{localStorage.setItem(KEY,v)}catch(e){}}
+  function refreshReaderButtons(){
+    const current=root.getAttribute('data-reader-size')||'normal';
+    document.querySelectorAll('[data-reader-size-choice]').forEach(function(btn){
+      const active=btn.getAttribute('data-reader-size-choice')===current;
+      btn.classList.toggle('active',active);
+      btn.setAttribute('aria-pressed',active?'true':'false');
+    });
+  }
+  function applyReaderSize(size,persist){
+    const value=ALLOWED.includes(size)?size:'normal';
+    root.setAttribute('data-reader-size',value);
+    if(persist!==false)safeSet(value);
+    refreshReaderButtons();
+    return value;
+  }
+
+  window.settingsSetReaderSize=function(size){
+    applyReaderSize(size,true);
+  };
+  window.getReaderSize=function(){return root.getAttribute('data-reader-size')||'normal'};
+
+  function initReaderSize(){
+    /* الملف القديم يمسح data-reader-size عند البداية؛ نعيد تطبيق الإعداد بعده مباشرة. */
+    applyReaderSize(safeGet()||'normal',false);
+    refreshReaderButtons();
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',initReaderSize,{once:true});
+  }else{
+    initReaderSize();
+  }
+
+  /* تحديث فوري لحالة أزرار حجم الخط عند فتح الإعدادات. */
+  document.addEventListener('click',function(e){
+    if(e.target && (e.target.id==='globalSettingsToggle' || e.target.closest?.('#globalSettingsToggle'))){
+      refreshReaderButtons();
+    }
+  });
+})();
+</script>
+<!-- ZAD_UPLOADED_FONT_SCROLL_FINAL_END -->
+
+
+<style id="zad-uploaded-font-specificity-fix">
+/* أولوية نهائية على قواعد النسخ السابقة ذات !important بدون المساس بالتخطيط. */
+html[data-reader-size] .ayahText,
+html:not([data-reader-size]) .ayahText{
+  font-size:var(--reader-quran)!important;
+  line-height:2.2!important;
+  max-width:100%!important;
+}
+html[data-reader-size] .bismillah,
+html:not([data-reader-size]) .bismillah{font-size:var(--reader-bismillah)!important;line-height:2!important}
+
+html[data-reader-size] #zadModule .zadText,
+html[data-reader-size] #zadModule .zadDaily p,
+html:not([data-reader-size]) #zadModule .zadText,
+html:not([data-reader-size]) #zadModule .zadDaily p{
+  font-size:var(--reader-zad)!important;
+  line-height:2.05!important;
+}
+html[data-reader-size] #zadModule .zadLesson,
+html[data-reader-size] #zadModule .zadMeta,
+html[data-reader-size] #zadModule .zadSource{font-size:var(--reader-meta)!important;line-height:1.9!important}
+
+html[data-reader-size] .heartFeature p,
+html[data-reader-size] .heartPanel p,
+html[data-reader-size] .heartPanel li,
+html[data-reader-size] .heartDailyItem p,
+html[data-reader-size] .heartWord p{
+  font-size:var(--reader-heart)!important;
+  line-height:1.95!important;
+}
+html[data-reader-size] .heartRemedyResult .verse,
+html[data-reader-size] .heartDhikrText,
+html[data-reader-size] .heartWord h3{
+  font-size:var(--reader-heart-verse)!important;
+  line-height:2!important;
+}
+
+html[data-reader-size] .hadithCard .hadithText,
+html[data-reader-size] #hadithOfficialResults .hadithText,
+html[data-reader-size] #hadithOfficialResults .result,
+html[data-reader-size] #hadithOfficialResults>div{
+  font-size:var(--reader-hadith)!important;
+  line-height:2.02!important;
+}
+
+html[data-reader-size] .mainAppSwitcher button{font-size:var(--reader-ui)!important}
+html[data-reader-size] .settingsRowText b{font-size:var(--reader-ui)!important}
+html[data-reader-size] .settingsRowText small{font-size:var(--reader-meta)!important;line-height:1.65!important}
+html[data-reader-size] .globalSettingsRow{font-size:var(--reader-ui)!important}
+html[data-reader-size] .status,
+html[data-reader-size] .pill,
+html[data-reader-size] label{font-size:var(--reader-meta)!important}
+
+/* إبقاء الحجم الكبير آمناً داخل تخطيط الكمبيوتر الضيق والسايدبار. */
+@media(min-width:900px){
+  html[data-device-mode="desktop"][data-reader-size="large"] .mainAppSwitcher button{
+    font-size:17px!important;
+    line-height:1.55!important;
+  }
+  html[data-device-mode="desktop"][data-reader-size="large"] .settingsRowText b{font-size:17px!important}
+  html[data-device-mode="desktop"][data-reader-size="large"] .settingsRowText small{font-size:14px!important}
+}
+</style>
+
 </body>
 </html>
 
 <!-- ZAD_V65_INSTANT_START: immediate shell + cached Quran fetch -->
+
+
+<!-- ZAD_BLUE_FONT_MENU_POLISH_START -->
+<style id="zad-blue-font-menu-polish">
+/* قائمة حجم الخط فقط — هوية زرقاء واضحة من غير تغيير أحجام القراءة نفسها. */
+:root{
+  --font-menu-blue:#2f80ed;
+  --font-menu-blue-2:#56a8ff;
+  --font-menu-blue-soft:rgba(47,128,237,.12);
+  --font-menu-blue-line:rgba(47,128,237,.42);
+}
+
+.fontSettingsRow{
+  border:1px solid transparent!important;
+}
+.fontSettingsRow .fontSettingsIcon{
+  font-family:Arial,"Segoe UI",sans-serif!important;
+  font-size:16px!important;
+  font-weight:900!important;
+  letter-spacing:-1px!important;
+  color:#fff!important;
+  background:linear-gradient(145deg,var(--font-menu-blue-2),var(--font-menu-blue))!important;
+  border-color:rgba(255,255,255,.20)!important;
+  box-shadow:0 7px 18px rgba(47,128,237,.24)!important;
+}
+.fontSettingsRow:hover,
+.fontSettingsRow[aria-expanded="true"]{
+  background:var(--font-menu-blue-soft)!important;
+  border-color:var(--font-menu-blue-line)!important;
+}
+.fontSettingsRow[aria-expanded="true"] .settingsRowText b{
+  color:var(--font-menu-blue-2)!important;
+}
+.fontSettingsRow[aria-expanded="true"] .settingsChevron{
+  color:var(--font-menu-blue-2)!important;
+}
+
+.fontSettingsPanel{
+  background:linear-gradient(145deg,
+    color-mix(in srgb,var(--card2) 90%,var(--font-menu-blue) 10%),
+    color-mix(in srgb,var(--card) 96%,var(--font-menu-blue) 4%))!important;
+}
+.fontSettingsPanel.open{
+  border-color:var(--font-menu-blue-line)!important;
+  box-shadow:inset 0 0 0 1px rgba(86,168,255,.06)!important;
+}
+.fontSettingsPanel .settingsLabel{
+  color:var(--font-menu-blue-2)!important;
+  font-weight:900!important;
+}
+.fontSettingsPanel .settingsHint{
+  padding:9px 11px!important;
+  border-radius:12px!important;
+  background:rgba(47,128,237,.07)!important;
+  border:1px solid rgba(47,128,237,.16)!important;
+}
+
+.zadReaderSizeGrid button{
+  position:relative!important;
+  overflow:hidden!important;
+  border:1px solid rgba(47,128,237,.24)!important;
+  background:color-mix(in srgb,var(--card) 96%,var(--font-menu-blue) 4%)!important;
+  color:var(--text)!important;
+  transition:background-color .16s ease,border-color .16s ease,color .16s ease,box-shadow .16s ease,transform .12s ease!important;
+}
+.zadReaderSizeGrid button:hover{
+  border-color:rgba(47,128,237,.55)!important;
+  background:rgba(47,128,237,.10)!important;
+}
+.zadReaderSizeGrid button:active{
+  transform:scale(.98)!important;
+}
+.zadReaderSizeGrid button.active{
+  outline:none!important;
+  border-color:rgba(86,168,255,.95)!important;
+  background:linear-gradient(135deg,var(--font-menu-blue-2),var(--font-menu-blue))!important;
+  color:#fff!important;
+  box-shadow:0 8px 22px rgba(47,128,237,.26),inset 0 1px 0 rgba(255,255,255,.18)!important;
+}
+.zadReaderSizeGrid button.active::after{
+  content:"✓";
+  display:inline-block;
+  margin-inline-start:7px;
+  font-size:.9em;
+  font-weight:900;
+}
+
+html[data-theme="light"] .fontSettingsPanel{
+  background:linear-gradient(145deg,#f4f9ff,#eaf4ff)!important;
+}
+html[data-theme="light"] .fontSettingsPanel .settingsHint{
+  color:#4c6278!important;
+}
+html[data-theme="light"] .zadReaderSizeGrid button{
+  background:#f8fbff!important;
+  color:#23384d!important;
+}
+html[data-theme="light"] .zadReaderSizeGrid button:hover{
+  background:#edf6ff!important;
+}
+html[data-theme="light"] .zadReaderSizeGrid button.active{
+  color:#fff!important;
+  background:linear-gradient(135deg,#58aaff,#2f80ed)!important;
+}
+</style>
+<!-- ZAD_BLUE_FONT_MENU_POLISH_END -->
+
+
+<!-- ZAD_DESKTOP_ISLAMIC_FONT_V2_START -->
+<style id="zad-desktop-islamic-font-v2-style">
+/* ===== V3: آية زاد القلب أوضح + التحكم بالخط من داخل الإعدادات فقط + صقل بصري للكمبيوتر ===== */
+
+/* آية اليوم في زاد القلب: حجم مستقل حتى لا ترث حجم الفقرة العادية. */
+html[data-reader-size="small"]{--reader-heart-daily-verse:27px}
+html:not([data-reader-size]),
+html[data-reader-size="normal"]{--reader-heart-daily-verse:30px}
+html[data-reader-size="medium"]{--reader-heart-daily-verse:34px}
+html[data-reader-size="large"]{--reader-heart-daily-verse:38px}
+
+#heartDailyPack .heartDailyItem:first-child p,
+#heartDailyPack .heartDailyItem p[style*="Amiri"]{
+  font-family:"Amiri","Traditional Arabic","Noto Naskh Arabic",serif!important;
+  font-size:var(--reader-heart-daily-verse)!important;
+  line-height:2.05!important;
+  font-weight:600!important;
+  text-align:center!important;
+  color:var(--text)!important;
+  max-width:100%!important;
+  overflow-wrap:normal!important;
+  word-break:normal!important;
+}
+
+/* ===== حجم آية زاد القلب على الهاتف — بدون زر خارجي ===== */
+@media(max-width:560px){
+  html[data-reader-size="large"]{--reader-heart-daily-verse:34px}
+  html[data-reader-size="medium"]{--reader-heart-daily-verse:31px}
+  html[data-reader-size="normal"]{--reader-heart-daily-verse:29px}
+  html[data-reader-size="small"]{--reader-heart-daily-verse:26px}
+}
+
+/* ===== تعديلات الشكل التالية للكمبيوتر فقط ===== */
+@media(min-width:900px){
+  /* بطاقة زاد القلب: نفس الروح البصرية الفخمة لبطاقة زاد الروح، مع توهج هادئ. */
+  html[data-device-mode="desktop"] .heartHero{
+    isolation:isolate!important;
+    overflow:hidden!important;
+    border:1px solid color-mix(in srgb,var(--heart-accent) 32%,var(--line))!important;
+    background:
+      radial-gradient(circle at 12% 16%,rgba(var(--heart-accent-rgb),.16),transparent 28%),
+      radial-gradient(circle at 88% 82%,color-mix(in srgb,var(--gold) 11%,transparent),transparent 30%),
+      linear-gradient(145deg,color-mix(in srgb,var(--card) 96%,var(--heart-accent) 4%),color-mix(in srgb,var(--card2) 95%,var(--gold) 5%))!important;
+    box-shadow:
+      0 18px 42px rgba(0,0,0,.18),
+      0 0 28px rgba(var(--heart-accent-rgb),.10),
+      inset 0 1px 0 rgba(255,255,255,.07)!important;
+  }
+  html[data-device-mode="desktop"] .heartHero::before{
+    content:""!important;
+    position:absolute!important;
+    inset:13px!important;
+    border:1px solid color-mix(in srgb,var(--heart-accent) 24%,transparent)!important;
+    border-radius:21px!important;
+    background:
+      linear-gradient(45deg,transparent 48%,rgba(var(--heart-accent-rgb),.035) 49%,rgba(var(--heart-accent-rgb),.035) 51%,transparent 52%)!important;
+    background-size:30px 30px!important;
+    pointer-events:none!important;
+    z-index:0!important;
+  }
+  html[data-device-mode="desktop"] .heartHero::after{
+    content:"☾  ✦  ☽"!important;
+    position:absolute!important;
+    left:42px!important;
+    bottom:18px!important;
+    font-family:Georgia,"Times New Roman",serif!important;
+    font-size:62px!important;
+    letter-spacing:15px!important;
+    color:color-mix(in srgb,var(--heart-accent) 60%,var(--gold) 40%)!important;
+    opacity:.065!important;
+    transform:rotate(-7deg)!important;
+    pointer-events:none!important;
+    z-index:0!important;
+    white-space:nowrap!important;
+  }
+  html[data-device-mode="desktop"] .heartHero > *{position:relative;z-index:1}
+  html[data-device-mode="desktop"] .heartLogo{
+    box-shadow:0 14px 30px rgba(0,0,0,.18),0 0 24px rgba(var(--heart-accent-rgb),.18)!important;
+  }
+
+  /* بطاقة زاد الروح في السايدبار: توهج خفيف متناسق من دون تغيير التخطيط. */
+  html[data-device-mode="desktop"] .mainBrandIdentity{
+    box-shadow:
+      inset 0 0 0 1px color-mix(in srgb,var(--gold) 11%,transparent),
+      0 10px 26px rgba(0,0,0,.10),
+      0 0 20px color-mix(in srgb,var(--green) 8%,transparent)!important;
+  }
+
+  /* الجزء أسفل زاد الروح: هوية إسلامية خفيفة جدًا بالخلفية. */
+  html[data-device-mode="desktop"] .mainAppSwitcher{
+    position:relative!important;
+    isolation:isolate!important;
+    overflow:hidden!important;
+    background:
+      radial-gradient(circle at 18% 12%,color-mix(in srgb,var(--gold) 7%,transparent),transparent 26%),
+      radial-gradient(circle at 84% 88%,color-mix(in srgb,var(--green) 8%,transparent),transparent 30%),
+      var(--card)!important;
+  }
+  html[data-device-mode="desktop"] .mainAppSwitcher::before{
+    content:"☾   ✦   ☽\A ✧   ☾   ✦";
+    white-space:pre;
+    position:absolute;
+    inset:auto -10px 22px -10px;
+    text-align:center;
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:44px;
+    line-height:1.7;
+    letter-spacing:12px;
+    color:color-mix(in srgb,var(--gold) 55%,var(--green) 45%);
+    opacity:.045;
+    pointer-events:none;
+    z-index:0;
+    transform:rotate(-5deg);
+  }
+  html[data-device-mode="desktop"] .mainAppSwitcher button{
+    position:relative!important;
+    z-index:1!important;
+  }
+  html[data-device-mode="desktop"] .mainAppSwitcher button.active{
+    box-shadow:
+      inset -4px 0 0 var(--green),
+      0 0 0 1px color-mix(in srgb,var(--green) 20%,transparent),
+      0 0 18px color-mix(in srgb,var(--green) 14%,transparent)!important;
+  }
+
+  /* آية اليوم نفسها تأخذ مساحة قراءة أهدأ داخل البطاقة. */
+  html[data-device-mode="desktop"] #heartDailyPack .heartDailyItem:first-child{
+    padding:22px 26px!important;
+    border-radius:20px!important;
+    background:
+      radial-gradient(circle at 90% 10%,rgba(var(--heart-accent-rgb),.08),transparent 27%),
+      var(--card2)!important;
+  }
+  html[data-device-mode="desktop"] #heartDailyPack .heartDailyItem:first-child p{
+    padding:8px 14px 4px!important;
+  }
+}
+</style>
+<!-- ZAD_DESKTOP_ISLAMIC_FONT_V3_AA_INSIDE_SETTINGS_END -->
+
+<style id="zad-v3-aa-inside-settings-only">
+#fontQuickToggle,#fontQuickPanel,.fontQuickToggle,.fontQuickPanel{display:none!important}
+</style>
+<script id="zad-v3-aa-inside-settings-only-script">
+(function(){
+  function removeExternalAa(){
+    ['fontQuickToggle','fontQuickPanel'].forEach(function(id){var n=document.getElementById(id);if(n)n.remove();});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',removeExternalAa,{once:true});else removeExternalAa();
+  setTimeout(removeExternalAa,100);
+})();
+</script>
